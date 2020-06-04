@@ -3,6 +3,7 @@ package mssqlh
 import (
 	"database/sql"
 	"errors"
+	"strings"
 )
 
 // Connection is the basis for building connection strings
@@ -47,4 +48,17 @@ func (c Connection) Redacted() string {
 // Open("D10,1433"), Open("D10:1433")
 func Open(string) (sql.DB, error) {
 	return sql.DB{}, errors.New("not implemented")
+}
+
+// SetInstance takes a server in the format "host[\instance]" and
+// assigns the Server and Instance
+func (c *Connection) SetInstance(s string) {
+	if s == "" {
+		return
+	}
+	parts := strings.Split(s, "\\")
+	c.Server = parts[0]
+	if len(parts) > 1 {
+		c.Instance = parts[1]
+	}
 }
