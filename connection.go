@@ -25,13 +25,13 @@ type Connection struct {
 }
 
 // String returns a connection string for the given connection.
-// If no server is specified, localhost is used
-// The executable name is used for app name if possible
+// If no server is specified, localhost is used.  
+// valid drivers: 
 func (c Connection) String() string {
 	if c.Driver == DriverMSSQL || c.Driver == "" {
 		return c.mssqlString()
 	}
-	return "tbd"
+	return c.odbcString()
 }
 
 // Redacted returns a connection string with the password

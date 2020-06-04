@@ -14,7 +14,7 @@ func (c Connection) mssqlString() string {
 	}
 
 	query := url.Values{}
-	// TODO get the app name from the executable if blank
+	// TODO get the app name from the executable if blank (testing?)
 	if c.AppName != "" {
 		query.Add("app name", c.AppName)
 	}
