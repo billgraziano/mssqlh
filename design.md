@@ -18,3 +18,5 @@ QuoteName
 QuoteString
 FixSlashes
 BatchSeparator
+
+ParseConnectionString() - ?
