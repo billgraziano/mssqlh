@@ -8,7 +8,7 @@ func QuoteName(s string) string {
 	return "[" + strings.Replace(s, "]", "]]", -1) + "]"
 }
 
-// QuoteString wraps a string in single-quotes and handles
+// QuoteString wraps a string in single-quotes and tries to handle
 // embedded quotes
 func QuoteString(s string) string {
 	return "'" + strings.Replace(s, "'", "''", -1) + "'"
