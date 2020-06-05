@@ -3,6 +3,7 @@ package mssqlh
 import (
 	"database/sql"
 	"errors"
+	"os"
 	"strings"
 )
 
@@ -25,8 +26,8 @@ type Connection struct {
 }
 
 // String returns a connection string for the given connection.
-// If no server is specified, localhost is used.  
-// valid drivers: 
+// If no server is specified, localhost is used.
+// valid drivers:
 func (c Connection) String() string {
 	if c.Driver == DriverMSSQL || c.Driver == "" {
 		return c.mssqlString()
@@ -61,4 +62,8 @@ func (c *Connection) SetInstance(s string) {
 	if len(parts) > 1 {
 		c.Instance = parts[1]
 	}
+}
+
+func appName() (string, error) {
+	return os.Executable()
 }

@@ -17,7 +17,16 @@ func (c Connection) mssqlString() string {
 	// TODO get the app name from the executable if blank (testing?)
 	if c.AppName != "" {
 		query.Add("app name", c.AppName)
+	} else {
+		if !mock {
+			app, err := appName()
+			if err != nil {
+				fmt.Println(app)
+				query.Add("app name", app)
+			}
+		}
 	}
+
 	if c.Database != "" {
 		query.Add("database", c.Database)
 	}

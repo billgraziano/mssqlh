@@ -3,7 +3,7 @@ module github.com/billgraziano/mssqlh
 go 1.14
 
 require (
-	github.com/billgraziano/mssqlodbc v0.0.0-20191217130057-34fa9fa48813
-	github.com/davecgh/go-spew v1.1.0
+	github.com/pkg/errors v0.8.1
 	github.com/stretchr/testify v1.6.0
+	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449
 )

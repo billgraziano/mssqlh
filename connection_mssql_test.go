@@ -8,6 +8,7 @@ import (
 
 func TestMSSQLString(t *testing.T) {
 	assert := assert.New(t)
+	mock = true
 	var tests = []struct {
 		name     string
 		in       Connection
