@@ -24,6 +24,7 @@ type Session struct {
 
 // GetSession gets details on the current connection to SQL Server
 // TODO Create a queryer interface and accept that
+// This requires VIEW DATABASE STATE in Azure
 func GetSession(ctx context.Context, db *sql.DB) (Session, error) {
 	if ctx == nil {
 		ctx = context.Background()

@@ -48,6 +48,21 @@ func Open(fqdn string) (*sql.DB, error) {
 	return conn.Open()
 }
 
+// ServerName buids a string in the format server\instance or server:host.
+// Most likely you won't have an instance and a port.  Plus I don't think
+// that works.  This should be roughly what it tries to connect to.
+func (c Connection) ServerName() string {
+	c.setDefaults()
+	s := c.Server
+	if c.Instance != "" {
+		s += "\\" + c.Instance
+	}
+	if c.Port != 0 {
+		s += fmt.Sprintf(":%d", c.Port)
+	}
+	return s
+}
+
 // String returns a connection string for the given connection.
 // Setting Driver to an invalid type returns an unusable connection string
 // but not an error.  It should be caught on Open
