@@ -27,11 +27,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	server, err := mssqlh.GetServer(nil, db)
+	if err != nil {
+		log.Fatal(errors.Wrap(err, "mssqlh.getserver"))
+	}
+
 	session, err := mssqlh.GetSession(context.Background(), db)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "mssqlh.getsession"))
 	}
-	log.Printf("@@SERVERNAME:  %s (%s)\r\n", session.ServerName, session.AuthScheme)
+	log.Printf("Connected to %s (%s) on session %d via %s\r\n", server.Name, server.Domain, session.ID, session.AuthScheme)
 }
 
 func test() {

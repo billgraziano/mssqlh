@@ -10,16 +10,16 @@ import (
 
 // Session stores information about the connection to SQL Server
 type Session struct {
-	ServerName      string    `db:"atat_server_name"`
-	SessionID       int       `db:"session_id"`
+	Server          string    `db:"atat_server_name"`
+	ID              int       `db:"session_id"`
 	ConnectTime     time.Time `db:"connect_time"`
 	LoginTime       time.Time `db:"login_time"`
 	ClientInterface string    `db:"client_interface_name"`
 	ClientVersion   int       `db:"client_version"`
 	AuthScheme      string    `db:"auth_scheme"`
-	ProgramName     string
-	LoginName       string
-	DatabaseName    string
+	Program         string
+	Login           string
+	Database        string
 }
 
 // GetSession gets details on the current connection to SQL Server
@@ -45,7 +45,7 @@ func GetSession(ctx context.Context, db *sql.DB) (Session, error) {
 		`
 	row := db.QueryRowContext(ctx, query)
 	var s Session
-	err := row.Scan(&s.ServerName, &s.SessionID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion, &s.ProgramName, &s.LoginName, &s.DatabaseName)
+	err := row.Scan(&s.Server, &s.ID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion, &s.Program, &s.Login, &s.Database)
 	if err != nil {
 		return s, errors.Wrap(err, "sql.scan")
 	}
