@@ -29,7 +29,9 @@ type Connection struct {
 	ExtraValues    map[string]string
 }
 
-// NewConnection returns a connection with some sane defaults
+/*
+NewConnection returns a connection with sane defaults
+*/
 func NewConnection(server, user, password, app string) Connection {
 	conn := Connection{User: user, Password: password, AppName: app}
 	conn.SetInstance(server)
@@ -52,7 +54,7 @@ func (c Connection) String() string {
 }
 
 // Redacted returns a connection string with the password
-// replaced with _redacted_
+// replaced with "redacted"
 func (c Connection) Redacted() string {
 	if c.Password != "" {
 		c.Password = "redacted"
