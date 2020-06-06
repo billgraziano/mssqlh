@@ -18,6 +18,6 @@ func QuoteString(s string) string {
 // Handles GO [count]
 // Handle comments?
 // Must be on a line byitself
-func SplitBatch(batch string) []string {
-	return []string{batch}
-}
+// func SplitBatch(batch string) []string {
+// 	return []string{batch}
+// }

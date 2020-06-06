@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/alexbrainman/odbc"
 	"github.com/billgraziano/mssqlh"
@@ -12,8 +13,12 @@ import (
 )
 
 func main() {
-	log.Print("starting mssqlh.exe")
-	db, err := mssqlh.Open("D40\\SQL2016")
+	if len(os.Args) < 2 {
+		log.Fatal("usage: mssqlh.exe fqdn")
+	}
+	fqdn := os.Args[1]
+	log.Printf("connecting to: %s...\r\n", fqdn)
+	db, err := mssqlh.Open(fqdn)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,7 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "mssqlh.getsession"))
 	}
-	log.Println("server: ", session.ServerName)
+	log.Printf("@@SERVERNAME:  %s (%s)\r\n", session.ServerName, session.AuthScheme)
 }
 
 func test() {

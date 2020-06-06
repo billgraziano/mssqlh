@@ -17,6 +17,9 @@ type Session struct {
 	ClientInterface string    `db:"client_interface_name"`
 	ClientVersion   int       `db:"client_version"`
 	AuthScheme      string    `db:"auth_scheme"`
+	ProgramName     string
+	LoginName       string
+	DatabaseName    string
 }
 
 // GetSession gets details on the current connection to SQL Server
@@ -33,13 +36,16 @@ func GetSession(ctx context.Context, db *sql.DB) (Session, error) {
 				,s.login_time
 				,COALESCE(s.client_interface_name, '') AS client_interface_name
 				,COALESCE(s.client_version, 0) AS client_version
+				,COALESCE(s.program_name, '') AS program_name 
+				,COALESCE(s.login_name, '') AS login_name
+				,COALESCE(DB_NAME(s.database_id), '') AS database_name
 		FROM	sys.dm_exec_connections c
 		JOIN	sys.dm_exec_sessions s ON s.session_id = c.session_id
 		WHERE	c.session_id = @@SPID;
 		`
 	row := db.QueryRowContext(ctx, query)
 	var s Session
-	err := row.Scan(&s.ServerName, &s.SessionID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion)
+	err := row.Scan(&s.ServerName, &s.SessionID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion, &s.ProgramName, &s.LoginName, &s.DatabaseName)
 	if err != nil {
 		return s, errors.Wrap(err, "sql.scan")
 	}
