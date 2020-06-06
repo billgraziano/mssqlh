@@ -38,7 +38,7 @@ func GetSession(ctx context.Context, db *sql.DB) (Session, error) {
 				,COALESCE(s.client_version, 0) AS client_version
 				,COALESCE(s.program_name, '') AS program_name 
 				,COALESCE(s.login_name, '') AS login_name
-				,COALESCE(DB_NAME(s.database_id), '') AS database_name
+				,COALESCE(DB_NAME(), '') AS database_name
 		FROM	sys.dm_exec_connections c
 		JOIN	sys.dm_exec_sessions s ON s.session_id = c.session_id
 		WHERE	c.session_id = @@SPID;

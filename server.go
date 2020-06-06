@@ -43,10 +43,10 @@ func GetServer(ctx context.Context, db *sql.DB) (Server, error) {
 		IF @has_perms = 1 
 		BEGIN
 			EXEC master..xp_regread
-					@rootkey = 'HKEY_LOCAL_MACHINE',
-					@key = 'system\currentcontrolset\services\tcpip\parameters\',
-					@value_name = 'Domain',
-					@value = @Suffix OUTPUT
+				@rootkey = 'HKEY_LOCAL_MACHINE',
+				@key = 'system\currentcontrolset\services\tcpip\parameters\',
+				@value_name = 'Domain',
+				@value = @Suffix OUTPUT
 		END;
 		
 		SELECT	COALESCE(@@SERVERNAME, '') AS atat_server_name
