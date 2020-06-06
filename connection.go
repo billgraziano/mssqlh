@@ -29,9 +29,9 @@ type Connection struct {
 	//ExtraValues    map[string]string
 }
 
-/*
-NewConnection returns a connection with sane defaults
-*/
+// NewConnection returns a connection with sane defaults.
+// You can specify the server "host[\instance]",
+// "host:port", or "host,port" format.
 func NewConnection(server, user, password, app string) Connection {
 	conn := Connection{User: user, Password: password, Application: app}
 	conn.SetInstance(server)
@@ -40,8 +40,17 @@ func NewConnection(server, user, password, app string) Connection {
 	return conn
 }
 
+// Open connects to a SQL Server.  It accepts "host[\instance]",
+// "host:port", or "host,port".
+func Open(fqdn string) (*sql.DB, error) {
+	var conn Connection
+	conn.SetInstance(fqdn)
+	return conn.Open()
+}
+
 // String returns a connection string for the given connection.
 // Setting Driver to an invalid type returns an unusable connection string
+// but not an error.  It should be caught on Open
 func (c Connection) String() string {
 	c.setDefaults()
 	switch c.Driver {
@@ -68,6 +77,16 @@ func (c Connection) Open() (*sql.DB, error) {
 	return sql.Open(c.Driver, c.String())
 }
 
+// SetInstance takes a server in the format "host[\instance]",
+// "host:port", or "host,port" and
+// assigns the Server, Instance, and Port
+func (c *Connection) SetInstance(s string) {
+	if s == "" {
+		return
+	}
+	c.Server, c.Instance, c.Port = parseFQDN(s)
+}
+
 // setDefaults sets defaults for the driver and host name.
 // This allows and empty connection to be used
 func (c *Connection) setDefaults() {
@@ -79,27 +98,8 @@ func (c *Connection) setDefaults() {
 	}
 }
 
-// Open connects to a SQL Server.  It accepts "host[\instance]",
-// "host:port", or "host,port".
-func Open(fqdn string) (*sql.DB, error) {
-	var conn Connection
-	conn.SetInstance(fqdn)
-	return conn.Open()
-}
-
-// SetInstance takes a server in the format "host[\instance]",
-// "host:port", or "host,port" and
-// assigns the Server, Instance, and Port
-func (c *Connection) SetInstance(s string) {
-	if s == "" {
-		return
-	}
-	c.Server, c.Instance, c.Port = parseFQDN(s)
-}
-
-// appName gets the default app name which is the fully
-// qualified executable name
-func appName() (string, error) {
+// exeName gets the default app name which is the executable name
+func exeName() (string, error) {
 	exe, err := os.Executable()
 	if err != nil {
 		return "", errors.Wrap(err, "os.executable")

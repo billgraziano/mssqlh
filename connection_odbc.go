@@ -42,7 +42,7 @@ func (c Connection) odbcString() string {
 		str += fmt.Sprintf("App=%s; ", c.Application)
 	} else {
 		if !mock {
-			app, err := appName()
+			app, err := exeName()
 			if err == nil {
 				fmt.Println(app)
 				str += fmt.Sprintf("App=%s; ", app)
