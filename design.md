@@ -18,3 +18,7 @@ QuoteName
 QuoteString
 FixSlashes
 BatchSeparator
+
+ParseConnectionString() - ?
+
+Do we want to set the pool information here?

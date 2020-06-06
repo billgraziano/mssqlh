@@ -24,3 +24,21 @@ func TestQuoteName(t *testing.T) {
 		assert.Equal(v.expected, actual, "bad quotename")
 	}
 }
+
+func TestQuoteString(t *testing.T) {
+	assert := assert.New(t)
+	var tests = []struct {
+		in       string
+		expected string
+	}{
+		{"test", "'test'"},
+		{"te'st", "'te''st'"},
+		{"'test'", "'''test'''"},
+		{"test'", "'test'''"},
+	}
+
+	for _, v := range tests {
+		actual := QuoteString(v.in)
+		assert.Equal(v.expected, actual, "bad quotstring")
+	}
+}
