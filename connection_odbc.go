@@ -38,8 +38,8 @@ func (c Connection) odbcString() string {
 		str += fmt.Sprintf("Database=%s; ", c.Database)
 	}
 
-	if c.AppName != "" {
-		str += fmt.Sprintf("App=%s; ", c.AppName)
+	if c.Application != "" {
+		str += fmt.Sprintf("App=%s; ", c.Application)
 	} else {
 		if !mock {
 			app, err := appName()

@@ -22,21 +22,21 @@ type Connection struct {
 	User           string
 	Password       string
 	Database       string
-	AppName        string
+	Application    string
 	DialTimeout    int
 	ConnectTimeout int
 	ODBCDriver     string
-	ExtraValues    map[string]string
+	//ExtraValues    map[string]string
 }
 
 /*
 NewConnection returns a connection with sane defaults
 */
 func NewConnection(server, user, password, app string) Connection {
-	conn := Connection{User: user, Password: password, AppName: app}
+	conn := Connection{User: user, Password: password, Application: app}
 	conn.SetInstance(server)
 	conn.setDefaults()
-	conn.ExtraValues = make(map[string]string)
+	//conn.ExtraValues = make(map[string]string)
 	return conn
 }
 
