@@ -21,7 +21,7 @@ If you don't pass a user and password it defaults to a trusted connection.
 
 Example using the Connection type:
 	cxn := mssqlh.Connect{
-		Server: 	 "db-txn.corp.loc",
+		Server:      "db-txn.corp.loc",
 		Application: "myapp",
 		DialTimeout: 15,
 	}
@@ -54,6 +54,9 @@ Version Support
 
 GetServer and GetSession should support SQL Server 2005 and beyond.  They
 have been tested on SQL Server 2014 through SQL Server 2019.
+
+There is limited testing with Azure SQL Databases.  The GetSession method
+requires VIEW DATABASE STATE permission.
 
 */
 package mssqlh
