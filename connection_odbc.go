@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/billgraziano/mssqlh/odbc"
+	"github.com/billgraziano/mssqlh/odbch"
 )
 
 // mssqlString returns a connection string for a GO MSSQL connection
@@ -18,7 +18,7 @@ func (c Connection) odbcString() string {
 		// We are swallowing this error.  Whatever uses this connection
 		// string will fail and it can deal with the error then.  This
 		// only happens if there are no drivers installed.
-		c.ODBCDriver, _ = odbc.BestDriver()
+		c.ODBCDriver, _ = odbch.BestDriver()
 	}
 	str += fmt.Sprintf("Driver={%s}; ", c.ODBCDriver)
 

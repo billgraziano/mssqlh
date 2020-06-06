@@ -3,7 +3,7 @@ package mssqlh
 import (
 	"testing"
 
-	"github.com/billgraziano/mssqlh/odbc"
+	"github.com/billgraziano/mssqlh/odbch"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,7 +44,7 @@ func TestODBCString(t *testing.T) {
 
 	for _, v := range tests {
 		v.in.Driver = DriverODBC
-		v.in.ODBCDriver = odbc.NativeClient11
+		v.in.ODBCDriver = odbch.NativeClient11
 
 		actual := v.in.String()
 		assert.Equal(v.expected, actual, v.name)
