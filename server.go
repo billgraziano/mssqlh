@@ -38,10 +38,10 @@ func GetServer(ctx context.Context, db *sql.DB) (Server, error) {
 		
 		SELECT	COALESCE(@@SERVERNAME, '') AS atat_server_name
 				,COALESCE(DEFAULT_DOMAIN(), '') as domain
-				,COALESCE(SERVERPROPERTY('ServerName'), '') AS computer
-				,COALESCE(SERVERPROPERTY('InstanceName'), '') AS instance
-				,COALESCE(SERVERPROPERTY('EngineEdition'), 0) AS engine_edition
-				,COALESCE(SERVERPROPERTY('ProductVersion'), '') AS product_version
+				,COALESCE(CAST(SERVERPROPERTY('ServerName') AS NVARCHAR(128)), '') AS computer
+				,COALESCE(CAST(SERVERPROPERTY('InstanceName') AS NVARCHAR(128)), '') AS instance
+				,COALESCE(CAST(SERVERPROPERTY('EngineEdition') AS INT), 0) AS engine_edition
+				,COALESCE(CAST(SERVERPROPERTY('ProductVersion') AS NVARCHAR(128)), '') AS product_version
 		`
 	row := db.QueryRowContext(ctx, query)
 	var s Server
