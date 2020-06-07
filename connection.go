@@ -32,8 +32,8 @@ type Connection struct {
 // NewConnection returns a connection with sane defaults.
 // You can specify the server "host[\instance]",
 // "host:port", or "host,port" format.
-func NewConnection(server, user, password, app string) Connection {
-	conn := Connection{User: user, Password: password, Application: app}
+func NewConnection(server, user, password, database, app string) Connection {
+	conn := Connection{User: user, Password: password, Database: database, Application: app}
 	conn.SetInstance(server)
 	conn.setDefaults()
 	//conn.ExtraValues = make(map[string]string)
@@ -42,9 +42,10 @@ func NewConnection(server, user, password, app string) Connection {
 
 // Open connects to a SQL Server.  It accepts "host[\instance]",
 // "host:port", or "host,port".
-func Open(fqdn string) (*sql.DB, error) {
+func Open(fqdn, database string) (*sql.DB, error) {
 	var conn Connection
 	conn.SetInstance(fqdn)
+	conn.Database = database
 	return conn.Open()
 }
 
