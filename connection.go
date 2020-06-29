@@ -32,8 +32,8 @@ type Connection struct {
 // NewConnection returns a connection with sane defaults.
 // You can specify the server "host[\instance]",
 // "host:port", or "host,port" format.
-func NewConnection(server, user, password, app string) Connection {
-	conn := Connection{User: user, Password: password, Application: app}
+func NewConnection(server, user, password, database, app string) Connection {
+	conn := Connection{User: user, Password: password, Database: database, Application: app}
 	conn.SetInstance(server)
 	conn.setDefaults()
 	//conn.ExtraValues = make(map[string]string)
@@ -42,10 +42,26 @@ func NewConnection(server, user, password, app string) Connection {
 
 // Open connects to a SQL Server.  It accepts "host[\instance]",
 // "host:port", or "host,port".
-func Open(fqdn string) (*sql.DB, error) {
+func Open(fqdn, database string) (*sql.DB, error) {
 	var conn Connection
 	conn.SetInstance(fqdn)
+	conn.Database = database
 	return conn.Open()
+}
+
+// ServerName buids a string in the format server\instance or server:host.
+// Most likely you won't have an instance and a port.  Plus I don't think
+// that works.  This should be roughly what it tries to connect to.
+func (c Connection) ServerName() string {
+	c.setDefaults()
+	s := c.Server
+	if c.Instance != "" {
+		s += "\\" + c.Instance
+	}
+	if c.Port != 0 {
+		s += fmt.Sprintf(":%d", c.Port)
+	}
+	return s
 }
 
 // String returns a connection string for the given connection.

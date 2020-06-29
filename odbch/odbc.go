@@ -41,15 +41,16 @@ const (
 )
 
 var orderedDrivers = []string{
-	NativeClient11,
-	NativeClient10,
 	ODBC17,
 	ODBC13,
+	NativeClient11,
 	ODBC11,
+	NativeClient10,
 	GenericODBC,
 }
 
-// Helper function to get a list of all ODBC drivers from the registery
+// getDrivers returns the ODBC drivers from the registery
+// TODO how does Linux do this?
 func getDrivers() ([]string, error) {
 
 	k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers`, registry.QUERY_VALUE)
