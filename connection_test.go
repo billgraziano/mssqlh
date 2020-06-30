@@ -12,7 +12,12 @@ func TestRedacted(t *testing.T) {
 		User:     "u1",
 		Password: "pass",
 	}
-	assert.Equal("sqlserver://u1:redacted@localhost", conn.Redacted())
+	assert.Equal("sqlserver://u1:redacted@localhost", conn.Redacted(0))
+	assert.Equal("sqlserver://u1:pass@localhost", conn.Redacted(5))
+	assert.Equal("sqlserver://u1:pass@localhost", conn.Redacted(4))
+	assert.Equal("sqlserver://u1:pas_redacted@localhost", conn.Redacted(3))
+	assert.Equal("sqlserver://u1:pa_redacted@localhost", conn.Redacted(2))
+	assert.Equal("sqlserver://u1:p_redacted@localhost", conn.Redacted(1))
 	assert.Equal("pass", conn.Password)
 }
 

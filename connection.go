@@ -79,11 +79,21 @@ func (c Connection) String() string {
 }
 
 // Redacted returns a connection string with the password
-// replaced with "redacted"
-func (c Connection) Redacted() string {
-	if c.Password != "" {
-		c.Password = "redacted"
+// replaced with "redacted".  Optionally, you can specify
+// how many characters of the password to include
+func (c Connection) Redacted(n int) string {
+	if c.Password == "" {
+		return c.String()
 	}
+	if n >= len(c.Password) {
+		return c.String()
+	}
+	if n == 0 {
+		c.Password = "redacted"
+		return c.String()
+	}
+	pwd := c.Password[:n]
+	c.Password = fmt.Sprintf("%s_redacted", pwd)
 	return c.String()
 }
 
