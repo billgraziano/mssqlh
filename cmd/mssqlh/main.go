@@ -52,5 +52,6 @@ func main() {
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "mssqlh.getsession"))
 	}
-	log.Printf("Connected to %s (%s) on session %d via '%s' authentication\r\n", server.Name, server.Domain, session.ID, session.AuthScheme)
+	log.Printf("Connected to %s (%s) as '%s' on session %d via '%s' in [%s] using '%s'\r\n",
+		server.Name, server.Domain, session.Login, session.ID, session.AuthScheme, session.Database, session.Application)
 }

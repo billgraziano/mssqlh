@@ -103,18 +103,21 @@ func (c Connection) Open() (*sql.DB, error) {
 // 	c.Server, c.Instance, c.Port = parseFQDN(s)
 // }
 
+// Computer returns the computer (or host) name from FQDN
 func (c Connection) Computer() string {
 	c.setDefaults()
 	computer, _, _ := parseFQDN(c.FQDN)
 	return computer
 }
 
+// Instance returns the instance from FQDN
 func (c Connection) Instance() string {
 	c.setDefaults()
 	_, instance, _ := parseFQDN(c.FQDN)
 	return instance
 }
 
+// Port returns the port from FQDN.  It returns 0 if no port.
 func (c Connection) Port() int {
 	c.setDefaults()
 	_, _, port := parseFQDN(c.FQDN)

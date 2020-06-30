@@ -21,7 +21,7 @@ If you don't pass a user and password it defaults to a trusted connection.
 
 Example using the Connection type:
 	cxn := mssqlh.Connect{
-		Server:      "db-txn.corp.loc",
+		FQDN:        "db-txn.corp.loc",
 		Application: "myapp",
 		DialTimeout: 15,
 	}
@@ -42,9 +42,9 @@ using ODBC driver (https://github.com/alexbrainman/odbc)
 
 Example code using the Connection object:
 	cxn := mssqlh.Connect{
-		Driver: mssqlh.DriverODBC,
+		Driver:     mssqlh.DriverODBC,
 		ODBCDriver: odbch.NativeClient11,
-		Server: "localhost",
+		FQDN:       "localhost",
 	}
 	db, err := cxn.Open()
 
