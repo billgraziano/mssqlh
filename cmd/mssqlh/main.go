@@ -19,7 +19,7 @@ func main() {
 	flag.Parse()
 	var cxn mssqlh.Connection
 	if srv != nil {
-		cxn.SetInstance(*srv)
+		cxn.FQDN = *srv
 	}
 	if user != nil {
 		cxn.User = *user

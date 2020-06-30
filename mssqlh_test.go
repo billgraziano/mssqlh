@@ -42,7 +42,7 @@ func TestMSSQL(t *testing.T) {
 		assert.NoError(err, "mssql getsession failed: %s", server)
 
 		cxn := mssqlh.Connection{}
-		cxn.SetInstance(server)
+		cxn.FQDN = server
 		cxn.Driver = mssqlh.DriverODBC
 
 		// Test with each installed "odbc" driver

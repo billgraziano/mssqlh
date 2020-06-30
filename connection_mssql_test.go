@@ -15,10 +15,11 @@ func TestMSSQLString(t *testing.T) {
 		expected string
 	}{
 		{"empty", Connection{}, "sqlserver://localhost"},
-		{"host", Connection{Server: "test"}, "sqlserver://test"},
-		{"fqdn", Connection{Server: "test.example.com"}, "sqlserver://test.example.com"},
-		{"host-instance", Connection{Server: "test", Instance: "junk"}, "sqlserver://test/junk"},
-		{"host-port", Connection{Server: "test", Port: 1433}, "sqlserver://test:1433"},
+		{"host", Connection{FQDN: "test"}, "sqlserver://test"},
+		{"fqdn", Connection{FQDN: "test.example.com"}, "sqlserver://test.example.com"},
+		{"host-instance", Connection{FQDN: "test\\junk"}, "sqlserver://test/junk"},
+		{"host-comma-port", Connection{FQDN: "test,1433"}, "sqlserver://test:1433"},
+		{"host-colon-port", Connection{FQDN: "test:1433"}, "sqlserver://test:1433"},
 		{"user", Connection{User: "u1"}, "sqlserver://u1:@localhost"},
 		{"user-pass", Connection{User: "u1", Password: "pass"}, "sqlserver://u1:pass@localhost"},
 		{"appname", Connection{Application: "appy"}, "sqlserver://localhost?app+name=appy"},
@@ -28,11 +29,10 @@ func TestMSSQLString(t *testing.T) {
 		{
 			"big",
 			Connection{
-				Server:      "new",
-				Instance:    "in",
+				FQDN:        "new\\in",
 				User:        "u2",
 				Password:    "nope",
-				Application:     "bonk",
+				Application: "bonk",
 				Database:    "txn",
 				DialTimeout: 5,
 			},

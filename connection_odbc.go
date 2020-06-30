@@ -13,6 +13,7 @@ func (c Connection) odbcString() string {
 	var str string
 
 	// We copied c so we can make changes to it
+	c.setDefaults()
 
 	if c.ODBCDriver == "" {
 		// We are swallowing this error.  Whatever uses this connection
@@ -21,10 +22,6 @@ func (c Connection) odbcString() string {
 		c.ODBCDriver, _ = odbch.BestDriver()
 	}
 	str += fmt.Sprintf("Driver={%s}; ", c.ODBCDriver)
-
-	if c.Server == "" {
-		c.Server = "localhost"
-	}
 
 	str += fmt.Sprintf("Server=%s; ", c.getODBCServerName())
 
@@ -60,12 +57,12 @@ func (c Connection) odbcString() string {
 
 // combineHostInstance returns the Server and Instance as Server\Instance
 func (c *Connection) getODBCServerName() string {
-	str := c.Server
-	if c.Instance != "" {
-		str += "\\" + c.Instance
+	str := c.Computer()
+	if c.Instance() != "" {
+		str += "\\" + c.Instance()
 	}
-	if c.Port != 0 {
-		str += fmt.Sprintf(",%d", c.Port)
+	if c.Port() != 0 {
+		str += fmt.Sprintf(",%d", c.Port())
 	}
 	return str
 }

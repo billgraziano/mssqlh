@@ -19,14 +19,14 @@ func TestRedacted(t *testing.T) {
 func TestSetInstance(t *testing.T) {
 	assert := assert.New(t)
 	var c0 Connection
-	c0.SetInstance("host")
-	assert.Equal("host", c0.Server, "host only")
-	assert.Equal("", c0.Instance, "host only")
+	c0.FQDN = "host"
+	assert.Equal("host", c0.Computer(), "host only")
+	assert.Equal("", c0.Instance(), "host only")
 
 	var c1 Connection
-	c1.SetInstance("host\\instance")
-	assert.Equal("host", c1.Server, "host instance")
-	assert.Equal("instance", c1.Instance, "host instance")
+	c1.FQDN = "host\\instance"
+	assert.Equal("host", c1.Computer(), "host instance")
+	assert.Equal("instance", c1.Instance(), "host instance")
 }
 
 func TestNameSplitter(t *testing.T) {

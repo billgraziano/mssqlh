@@ -16,9 +16,7 @@ type Connection struct {
 	// Driver sets the GO driver that will be used.
 	// Leaving this blank defaults to DriverMSSQL.
 	Driver         string
-	Server         string
-	Instance       string
-	Port           int
+	FQDN           string
 	User           string
 	Password       string
 	Database       string
@@ -27,14 +25,17 @@ type Connection struct {
 	ConnectTimeout int
 	ODBCDriver     string
 	//ExtraValues    map[string]string
+	//Server         string
+	//Instance       string
+	//Port           int
 }
 
 // NewConnection returns a connection with sane defaults.
 // You can specify the server "host[\instance]",
 // "host:port", or "host,port" format.
 func NewConnection(server, user, password, database, app string) Connection {
-	conn := Connection{User: user, Password: password, Database: database, Application: app}
-	conn.SetInstance(server)
+	conn := Connection{FQDN: server, User: user, Password: password, Database: database, Application: app}
+	//conn.SetInstance(server)
 	conn.setDefaults()
 	//conn.ExtraValues = make(map[string]string)
 	return conn
@@ -43,9 +44,7 @@ func NewConnection(server, user, password, database, app string) Connection {
 // Open connects to a SQL Server.  It accepts "host[\instance]",
 // "host:port", or "host,port".
 func Open(fqdn, database string) (*sql.DB, error) {
-	var conn Connection
-	conn.SetInstance(fqdn)
-	conn.Database = database
+	conn := Connection{FQDN: fqdn, Database: database}
 	return conn.Open()
 }
 
@@ -54,14 +53,15 @@ func Open(fqdn, database string) (*sql.DB, error) {
 // that works.  This should be roughly what it tries to connect to.
 func (c Connection) ServerName() string {
 	c.setDefaults()
-	s := c.Server
-	if c.Instance != "" {
-		s += "\\" + c.Instance
-	}
-	if c.Port != 0 {
-		s += fmt.Sprintf(":%d", c.Port)
-	}
-	return s
+	return c.FQDN
+	// s := c.Server
+	// if c.Instance != "" {
+	// 	s += "\\" + c.Instance
+	// }
+	// if c.Port != 0 {
+	// 	s += fmt.Sprintf(":%d", c.Port)
+	// }
+	// return s
 }
 
 // String returns a connection string for the given connection.
@@ -96,11 +96,29 @@ func (c Connection) Open() (*sql.DB, error) {
 // SetInstance takes a server in the format "host[\instance]",
 // "host:port", or "host,port" and
 // assigns the Server, Instance, and Port
-func (c *Connection) SetInstance(s string) {
-	if s == "" {
-		return
-	}
-	c.Server, c.Instance, c.Port = parseFQDN(s)
+// func (c *Connection) SetInstance(s string) {
+// 	if s == "" {
+// 		return
+// 	}
+// 	c.Server, c.Instance, c.Port = parseFQDN(s)
+// }
+
+func (c Connection) Computer() string {
+	c.setDefaults()
+	computer, _, _ := parseFQDN(c.FQDN)
+	return computer
+}
+
+func (c Connection) Instance() string {
+	c.setDefaults()
+	_, instance, _ := parseFQDN(c.FQDN)
+	return instance
+}
+
+func (c Connection) Port() int {
+	c.setDefaults()
+	_, _, port := parseFQDN(c.FQDN)
+	return port
 }
 
 // setDefaults sets defaults for the driver and host name.
@@ -109,8 +127,8 @@ func (c *Connection) setDefaults() {
 	if c.Driver == "" {
 		c.Driver = DriverMSSQL
 	}
-	if c.Server == "" {
-		c.Server = "localhost"
+	if c.FQDN == "" {
+		c.FQDN = "localhost"
 	}
 }
 

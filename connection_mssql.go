@@ -9,9 +9,7 @@ import (
 // mssqlString returns a connection string for a GO MSSQL connection
 func (c Connection) mssqlString() string {
 	// We copied c so we can make changes to it
-	if c.Server == "" {
-		c.Server = "localhost"
-	}
+	c.setDefaults()
 
 	query := url.Values{}
 	// TODO get the app name from the executable if blank (testing?)
@@ -40,8 +38,8 @@ func (c Connection) mssqlString() string {
 	// TODO apply any parameters
 	u := &url.URL{
 		Scheme:   "sqlserver",
-		Host:     hostPortString(c.Server, c.Port),
-		Path:     c.Instance,
+		Host:     hostPortString(c.Computer(), c.Port()),
+		Path:     c.Instance(),
 		RawQuery: query.Encode(),
 	}
 	if c.User != "" || c.Password != "" {
