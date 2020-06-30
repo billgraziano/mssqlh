@@ -17,7 +17,7 @@ type Session struct {
 	ClientInterface string    `db:"client_interface_name"`
 	ClientVersion   int       `db:"client_version"`
 	AuthScheme      string    `db:"auth_scheme"`
-	Program         string
+	Application     string
 	Login           string
 	Database        string
 }
@@ -46,7 +46,7 @@ func GetSession(ctx context.Context, db *sql.DB) (Session, error) {
 		`
 	row := db.QueryRowContext(ctx, query)
 	var s Session
-	err := row.Scan(&s.Server, &s.ID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion, &s.Program, &s.Login, &s.Database)
+	err := row.Scan(&s.Server, &s.ID, &s.ConnectTime, &s.AuthScheme, &s.LoginTime, &s.ClientInterface, &s.ClientVersion, &s.Application, &s.Login, &s.Database)
 	if err != nil {
 		return s, errors.Wrap(err, "sql.scan")
 	}
