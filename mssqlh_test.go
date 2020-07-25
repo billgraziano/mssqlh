@@ -1,3 +1,4 @@
+// +build windows
 package mssqlh_test
 
 import (
