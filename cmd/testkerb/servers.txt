@@ -1,0 +1,21 @@
+# GO sqlserver connection strings
+# One per line
+# Format: https://github.com/denisenkom/go-mssqldb
+
+# sqlserver://user:password@localhost/instance
+# sqlserver://host.domain.name
+# sqlserver://host.domain.name:port 
+# sqlserver://user:password@host.domain.name 
+# sqlserver://d40/sql2016?app+name=xyz&log=3
+# sqlserver://d40/sql2017
+
+
+
+
+
+
+
+
+
+
+
