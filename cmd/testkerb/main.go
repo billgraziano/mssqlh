@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	_ "github.com/denisenkom/go-mssqldb"
+	mssql "github.com/denisenkom/go-mssqldb"
 	"github.com/fatih/color"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
@@ -52,7 +52,7 @@ func main() {
 		// Parse and adjust the connections
 		sqlurl, err := url.Parse(s)
 		if err != nil {
-			fmt.Fprintf(color.Output, " ==> %s\r\n", red(err.Error()))
+			fmt.Fprintf(color.Output, " ==> %s\n", red(err.Error()))
 			continue
 		}
 
@@ -78,24 +78,23 @@ func main() {
 
 		db, err := sqlx.Open("mssql", s)
 		if err != nil {
-			// log.Println(errors.Wrap(err, "csn.openx"))
-			//log.Printf("%s ==> %s", s, err.Error())
-			fmt.Fprintf(color.Output, " ==> %s\r\n", red(err.Error()))
+			msg := sqlerror(err)
+			fmt.Fprintf(color.Output, " ==> %s\n", red(msg))
 			continue
 		}
 
 		stmt := `
-		SELECT	@@SERVERNAME AS ServerName,
-		auth_scheme, 
-		program_name,
-		client_version,
-		client_interface_name,
-		login_name,
-		net_transport
---,* 
-FROM sys.dm_exec_connections c
-JOIN sys.dm_exec_sessions s ON s.session_id = c.session_id
-WHERE c.session_id = @@SPID
+			SELECT	@@SERVERNAME AS ServerName,
+				auth_scheme, 
+				program_name,
+				client_version,
+				client_interface_name,
+				login_name,
+				net_transport
+			--,* 
+			FROM sys.dm_exec_connections c
+			JOIN sys.dm_exec_sessions s ON s.session_id = c.session_id
+			WHERE c.session_id = @@SPID
 		`
 		spid := SPID{}
 		if *driverLog != "" {
@@ -103,7 +102,8 @@ WHERE c.session_id = @@SPID
 		}
 		err = db.Get(&spid, stmt)
 		if err != nil {
-			fmt.Fprintf(color.Output, " ==> %s\r\n", red(err.Error()))
+			msg := sqlerror(err)
+			fmt.Fprintf(color.Output, " ==> %s\n", red(msg))
 			continue
 		}
 		if *driverLog != "" {
@@ -111,16 +111,24 @@ WHERE c.session_id = @@SPID
 		}
 		msg := fmt.Sprintf("%s (%s - %s)", spid.ServerName, spid.AuthScheme, spid.NetTransport)
 		if spid.AuthScheme == "KERBEROS" {
-			//msg := fmt.Sprintf("%s (%s)", spid.ServerName, spid.AuthScheme)
-			// fmt.Fprintf(color.Output, " ==> %s\r\n", green(msg))
-			fmt.Fprintf(color.Output, " ==> %s\r\n", kerberos(msg))
+			fmt.Fprintf(color.Output, " ==> %s\n", kerberos(msg))
 		} else {
-			// fmt.Fprintf(color.Output, " ==> %s (%s)\r\n", spid.ServerName, spid.AuthScheme)
 			fmt.Fprintf(color.Output, " ==> %s\n", ntlm(msg))
 		}
 	}
 }
 
+// sqlerror formats a SQL Server error
+func sqlerror(err error) string {
+	e, ok := err.(mssql.Error)
+	if !ok {
+		return err.Error()
+	}
+	str := fmt.Sprintf("Error: %s (Msg %d, Level %d, State %d, Line %d)", e.Message, e.Number, e.Class, e.State, e.LineNo)
+	return str
+}
+
+// readfile returns a list of servers to test
 func readfile(file string) ([]string, error) {
 	var servers []string
 	csvFile, err := os.Open(file)
@@ -137,7 +145,6 @@ func readfile(file string) ([]string, error) {
 		servers = append(servers, l[0])
 	}
 	return servers, nil
-
 }
 
 // SPID holds the details for a connection
