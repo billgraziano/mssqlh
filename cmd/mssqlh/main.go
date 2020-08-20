@@ -41,7 +41,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	server, err := mssqlh.GetServer(nil, db)
+	server, err := mssqlh.GetServer(context.TODO(), db)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "mssqlh.getserver"))
 	}

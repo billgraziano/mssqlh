@@ -26,7 +26,7 @@ func (c Connection) odbcString() string {
 	str += fmt.Sprintf("Server=%s; ", c.getODBCServerName())
 
 	if c.User == "" {
-		str += fmt.Sprintf("Trusted_Connection=Yes; ")
+		str += "Trusted_Connection=Yes; "
 	} else {
 		str += fmt.Sprintf("UID=%s; PWD=%s; ", c.User, c.Password)
 	}

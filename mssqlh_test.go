@@ -2,6 +2,7 @@
 package mssqlh_test
 
 import (
+	"context"
 	"encoding/csv"
 	"fmt"
 	"os"
@@ -36,10 +37,10 @@ func TestMSSQL(t *testing.T) {
 		m, err := mssqlh.Open(server, "")
 		require.NoError(err, "mssql open failed: %s", server)
 
-		_, err = mssqlh.GetServer(nil, m)
+		_, err = mssqlh.GetServer(context.TODO(), m)
 		assert.NoError(err, "mssql getserver failed: %s", server)
 
-		_, err = mssqlh.GetSession(nil, m)
+		_, err = mssqlh.GetSession(context.TODO(), m)
 		assert.NoError(err, "mssql getsession failed: %s", server)
 
 		cxn := mssqlh.Connection{}
@@ -55,10 +56,10 @@ func TestMSSQL(t *testing.T) {
 			o, err := cxn.Open()
 			require.NoError(err, "odbc getsession failed: %s", server)
 
-			_, err = mssqlh.GetServer(nil, o)
+			_, err = mssqlh.GetServer(context.TODO(), o)
 			assert.NoError(err, "odbc getserver failed: %s", server)
 
-			_, err = mssqlh.GetSession(nil, o)
+			_, err = mssqlh.GetSession(context.TODO(), o)
 			assert.NoError(err, "odbc getsession failed: %s", server)
 		}
 	}
