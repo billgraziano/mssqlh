@@ -1,28 +1,31 @@
-TESTKERB
+TestKerb
 ========
 
-This is a simple utility to see if KERBEROS connectivity is working.
-It reads from `servers.txt` or the command-line for servers to test.  It also works well as a simple connectivity test tool.
+This is a simple utility to see if KERBEROS connectivity is working.  It's also pretty good at general connectivity testing.
 
-It uses the driver at [https://github.com/denisenkom/go-mssqldb](https://github.com/denisenkom/go-mssqldb).
+* It reads from `servers.txt` or the command-line for servers to test.
 
-It expects the `servers.txt` file to include raw connection strings in that format.  Samples are provided.
+* It uses the driver at [https://github.com/denisenkom/go-mssqldb](https://github.com/denisenkom/go-mssqldb).
 
-Alternatively, you can provide connection strings on the command-line.  Provide them space separated:
+* It expects `servers.txt` file to include raw connection strings in that format.  Samples are provided.
 
-`testkerb.exe sqlserver://d40/sql2017 sqlserver://d40/sql2019`
+* Alternatively, you can provide connection strings on the command-line.  Provide them space separated:
 
-Usage
+      testkerb.exe  sqlserver://host/instance1  sqlserver://host/instance2
+
+Parameters
 -----
 
 ```
-Usage of testkerb:
   -app string
         sets the application name (default "testkerb")
   -debug
-        enable debug messages
+        enables debug messages
   -file string
-        list of servers (default ".\\servers.txt")
+        file with list of servers (default "servers.txt")
   -log string
-        log=3 for driver logging (can be messy)
+        see github.com/denisenkom/go-mssqldb
 ```
+
+Setting `-app ""` will omit the application name.
+

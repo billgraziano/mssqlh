@@ -5,7 +5,6 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
-	"log"
 	"net/url"
 	"os"
 	"strings"
@@ -18,31 +17,33 @@ import (
 
 func main() {
 	var err error
-	var file = flag.String("file", ".\\servers.txt", "list of servers")
-	var driverLog = flag.String("log", "", "log=3 for driver logging (messy)")
+	var file = flag.String("file", "servers.txt", "file with list of servers")
+	var driverLog = flag.String("log", "", "see github.com/denisenkom/go-mssqldb")
 	var appName = flag.String("app", "testkerb", "sets the application name")
-	var debug = flag.Bool("debug", false, "enable debug messages")
+	var debug = flag.Bool("debug", false, "enables debug messages")
 	flag.Parse()
 
 	var servers []string
 
+	cyan := color.New(color.FgCyan).SprintFunc()
+	red := color.New(color.FgHiRed).SprintFunc()
+	kerberos := color.New(color.FgWhite).SprintFunc()
+	ntlm := color.New(color.FgYellow).SprintFunc()
+
 	if len(flag.Args()) == 0 {
 		servers, err = readfile(*file)
 		if err != nil {
-			log.Fatal(errors.Wrap(err, "readfile"))
+			fmt.Fprintf(color.Output, "%s\n", red(errors.Cause(err)))
+			os.Exit(1)
 		}
 	} else {
 		servers = flag.Args()
 	}
 
 	if len(servers) == 0 {
-		log.Fatal("no servers. edit servers.txt or provide on command line")
+		fmt.Fprintf(color.Output, "%s\n", red("No servers. Edit servers.txt or provide on the command line"))
+		os.Exit(1)
 	}
-
-	cyan := color.New(color.FgCyan).SprintFunc()
-	red := color.New(color.FgHiRed).SprintFunc()
-	kerberos := color.New(color.FgWhite).SprintFunc()
-	ntlm := color.New(color.FgYellow).SprintFunc()
 
 	for _, v := range servers {
 		dirty := false
