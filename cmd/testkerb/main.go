@@ -136,6 +136,7 @@ func readfile(file string) ([]string, error) {
 	if err != nil {
 		return servers, errors.Wrap(err, "os.open")
 	}
+	defer csvFile.Close()
 	reader := csv.NewReader(bufio.NewReader(csvFile))
 	reader.Comment = '#'
 	lines, err := reader.ReadAll()

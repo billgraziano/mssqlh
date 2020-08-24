@@ -2,6 +2,7 @@
 # One per line
 # Format: https://github.com/denisenkom/go-mssqldb
 
+sqlserver://localhost
 # sqlserver://host
 # sqlserver://host/instance
 # sqlserver://host.domain.name
