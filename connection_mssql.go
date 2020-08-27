@@ -19,7 +19,6 @@ func (c Connection) mssqlString() string {
 		if !mock {
 			app, err := exeName()
 			if err != nil {
-				fmt.Println(app)
 				query.Add("app name", app)
 			}
 		}

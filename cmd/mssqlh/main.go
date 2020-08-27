@@ -5,12 +5,16 @@ import (
 	"flag"
 	"log"
 
+	_ "github.com/alexbrainman/odbc"
 	"github.com/billgraziano/mssqlh"
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/pkg/errors"
 )
 
 func main() {
+	// driver & odbc driver
+	var driver = flag.String("driver", "mssql", "mssql | odbc")
+	var odbc = flag.String("odbc", "ODBC Driver 17 for SQL Server", "ODBC driver if using ODBC")
 	var srv = flag.String("s", "", "server (server.net.com or server,port or server:port)")
 	var user = flag.String("u", "", "user name")
 	var pwd = flag.String("p", "", "password")
@@ -30,7 +34,16 @@ func main() {
 		cxn.Database = *dbname
 	}
 
-	log.Printf("connecting to: '%s'...\r\n", cxn.ServerName())
+	if driver != nil {
+		cxn.Driver = *driver
+	}
+
+	if driver != nil && odbc != nil {
+		cxn.ODBCDriver = *odbc
+	}
+
+	log.Printf("connection string: '%s'\n", cxn.String())
+	log.Printf("connecting to: '%s'...\n", cxn.ServerName())
 	db, err := cxn.Open()
 	if err != nil {
 		log.Fatal(err)

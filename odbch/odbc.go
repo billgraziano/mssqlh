@@ -2,6 +2,7 @@ package odbch
 
 import (
 	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 )
 
 // ErrNoDrivers is returned if no valid ODBC SQL Server drivers are found
@@ -44,3 +45,5 @@ var orderedDrivers = []string{
 	NativeClient10,
 	GenericODBC,
 }
+
+var fs = afero.NewOsFs()

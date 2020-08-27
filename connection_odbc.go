@@ -7,7 +7,7 @@ import (
 	"github.com/billgraziano/mssqlh/odbch"
 )
 
-// mssqlString returns a connection string for a GO MSSQL connection
+// odbcString returns a connection string for a GO ODBC connection
 func (c Connection) odbcString() string {
 
 	var str string
@@ -41,7 +41,6 @@ func (c Connection) odbcString() string {
 		if !mock {
 			app, err := exeName()
 			if err == nil {
-				fmt.Println(app)
 				str += fmt.Sprintf("App=%s; ", app)
 			}
 		}

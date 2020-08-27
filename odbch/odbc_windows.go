@@ -8,8 +8,7 @@ import (
 	"golang.org/x/sys/windows/registry"
 )
 
-// getDrivers returns the ODBC drivers from the registery
-// TODO how does Linux do this?
+// getDrivers returns the ODBC drivers from the Windows registery
 func getDrivers() ([]string, error) {
 
 	k, err := registry.OpenKey(registry.LOCAL_MACHINE, `SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers`, registry.QUERY_VALUE)
@@ -34,7 +33,7 @@ func InstalledDrivers() ([]string, error) {
 
 	d, err := getDrivers()
 	if err != nil {
-		return drivers, errors.Wrap(err, "getDrivers")
+		return drivers, errors.Wrap(err, "getdrivers")
 	}
 
 	for _, v := range d {
@@ -50,7 +49,6 @@ func InstalledDrivers() ([]string, error) {
 
 // BestDriver returns the "best" driver installed on the machine
 func BestDriver() (string, error) {
-
 	drivers, err := getDrivers()
 	if err != nil {
 		return "", errors.Wrap(err, "getDrivers")
@@ -68,17 +66,16 @@ func BestDriver() (string, error) {
 
 // ValidDriver tests if a string is a valid SQL Server Driver on this machine
 func ValidDriver(d string) error {
-
+	d = strings.TrimSpace(d)
 	drivers, err := InstalledDrivers()
 	if err != nil {
 		return errors.Wrap(err, "availabledrivers")
 	}
 
 	for _, v := range drivers {
-		if v == d {
+		if strings.EqualFold(v, d) {
 			return nil
 		}
 	}
-
 	return ErrInvalidDriver
 }
