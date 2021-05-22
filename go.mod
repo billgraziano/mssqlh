@@ -1,6 +1,6 @@
 module github.com/billgraziano/mssqlh
 
-go 1.14
+go 1.16
 
 require (
 	github.com/alexbrainman/odbc v0.0.0-20200426075526-f0492dfa1575
@@ -9,9 +9,10 @@ require (
 	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/pkg/errors v0.8.1
+	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/spf13/afero v1.3.4
 	github.com/stretchr/testify v1.6.0
 	golang.org/x/sys v0.0.0-20191210023423-ac6580df4449
-	gopkg.in/go-ini/ini.v1 v1.60.1 // indirect
+	google.golang.org/appengine v1.6.7 // indirect
 	gopkg.in/ini.v1 v1.60.1
 )
