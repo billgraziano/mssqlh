@@ -34,6 +34,22 @@ func (c Connection) mssqlString() string {
 		query.Add("connect timeout", strconv.Itoa(c.ConnectTimeout))
 	}
 
+	if c.Encrypt != "" {
+		switch c.Encrypt {
+		case EncryptMandatory:
+			query.Add("encrypt", "true")
+		case EncryptNo:
+			query.Add("encrypt", "false")
+		case EncryptOptional:
+		case EncryptStrict:
+			query.Add("encrypt", "true")
+		case EncryptYes:
+			query.Add("encrypt", "true")
+		default: // let the driver handle any errors
+			query.Add("encrypt", c.Encrypt)
+		}
+	}
+
 	// TODO apply any parameters
 	u := &url.URL{
 		Scheme:   "sqlserver",

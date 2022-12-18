@@ -14,7 +14,7 @@ import (
 // Connection is the basis for building connection strings
 type Connection struct {
 	// Driver sets the GO driver that will be used.
-	// Leaving this blank defaults to DriverMSSQL.
+	// Leaving this blank defaults to DriverMSSQL (the native GO driver).
 	Driver         string
 	FQDN           string
 	User           string
@@ -24,10 +24,7 @@ type Connection struct {
 	DialTimeout    int
 	ConnectTimeout int
 	ODBCDriver     string
-	//ExtraValues    map[string]string
-	//Server         string
-	//Instance       string
-	//Port           int
+	Encrypt        string
 }
 
 // NewConnection returns a connection with sane defaults.

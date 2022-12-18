@@ -6,10 +6,10 @@ import (
 )
 
 // ErrNoDrivers is returned if no valid ODBC SQL Server drivers are found
-var ErrNoDrivers = errors.New("odbc: no drivers found")
+var ErrNoDrivers = errors.New("no drivers found")
 
 // ErrInvalidDriver indiates that an ODBC SQL Server driver is invalid
-var ErrInvalidDriver = errors.New("odbc: invalid driver")
+var ErrInvalidDriver = errors.New("invalid driver")
 
 // ODBCDriver is the name of an ODBC SQL Server Drive
 //type ODBCDriver string
@@ -22,7 +22,7 @@ const (
 	NativeClient10 string = "SQL Server Native Client 10.0"
 
 	// ODBC18 is an ODBC SQL Server Driver version 18
-	ODBC18 string = "ODBC Driver 17 for SQL Server"
+	ODBC18 string = "ODBC Driver 18 for SQL Server"
 
 	// ODBC17 is an ODBC SQL Server Driver version 17
 	ODBC17 string = "ODBC Driver 17 for SQL Server"

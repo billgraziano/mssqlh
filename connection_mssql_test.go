@@ -26,6 +26,12 @@ func TestMSSQLString(t *testing.T) {
 		{"database", Connection{Database: "db"}, "sqlserver://localhost?database=db"},
 		{"dial timeout", Connection{DialTimeout: 10}, "sqlserver://localhost?dial+timeout=10"},
 		{"connect timeout", Connection{ConnectTimeout: 11}, "sqlserver://localhost?connect+timeout=11"},
+		{"encrypt-yes", Connection{Encrypt: EncryptYes}, "sqlserver://localhost?encrypt=true"},
+		{"encrypt-no", Connection{Encrypt: EncryptNo}, "sqlserver://localhost?encrypt=false"},
+		{"encrypt-optional", Connection{Encrypt: EncryptOptional}, "sqlserver://localhost"},
+		{"encrypt-strict", Connection{Encrypt: EncryptStrict}, "sqlserver://localhost?encrypt=true"},
+		{"encrypt-mandatory", Connection{Encrypt: EncryptMandatory}, "sqlserver://localhost?encrypt=true"},
+		{"encrypt-other", Connection{Encrypt: "other"}, "sqlserver://localhost?encrypt=other"},
 		{
 			"big",
 			Connection{

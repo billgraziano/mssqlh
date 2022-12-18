@@ -51,6 +51,16 @@ func (c Connection) odbcString() string {
 		str += fmt.Sprintf("Timeout=%d; ", to)
 	}
 
+	c.Encrypt = strings.TrimSpace(c.Encrypt)
+	// ODBC18 requires a value for Encrypt.
+	// Use Optional if no value specified.
+	if c.Encrypt == "" && c.ODBCDriver == odbch.ODBC18 {
+		c.Encrypt = EncryptOptional
+	}
+	if c.Encrypt != "" {
+		str += fmt.Sprintf("Encrypt=%s; ", c.Encrypt)
+	}
+
 	return strings.TrimSpace(str)
 }
 
