@@ -1,7 +1,7 @@
 package mssqlh
 
 
-// DriverMSSQL uses the https://github.com/denisenkom/go-mssqldb library.
+// DriverMSSQL uses the https://github.com/microsoft/go-mssqldb library.
 // This is the driver for this package.
 var DriverMSSQL = "mssql"
 

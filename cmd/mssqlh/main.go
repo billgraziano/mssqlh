@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/alexbrainman/odbc"
 	"github.com/billgraziano/mssqlh"
-	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/microsoft/go-mssqldb"
 	"github.com/pkg/errors"
 )
 

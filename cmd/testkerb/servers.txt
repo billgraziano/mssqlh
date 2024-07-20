@@ -1,6 +1,6 @@
 # GO "sqlserver" connection strings
 # One per line
-# Format: https://github.com/denisenkom/go-mssqldb
+# Format: https://github.com/microsoft/go-mssqldb
 
 sqlserver://localhost
 # sqlserver://host

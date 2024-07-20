@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	_ "github.com/alexbrainman/odbc"
-	mssql "github.com/denisenkom/go-mssqldb"
 	"github.com/fatih/color"
 	"github.com/jmoiron/sqlx"
+	mssql "github.com/microsoft/go-mssqldb"
 	"github.com/pkg/errors"
 )
 

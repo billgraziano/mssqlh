@@ -5,7 +5,7 @@ This is a simple utility to see if KERBEROS connectivity is working.  It's also 
 
 * It reads from `servers.txt` or the command-line for servers to test.
 
-* It uses the driver at [https://github.com/denisenkom/go-mssqldb](https://github.com/denisenkom/go-mssqldb).
+* It uses the driver at [https://github.com/microsoft/go-mssqldb](https://github.com/microsoft/go-mssqldb).
 
 * It expects `servers.txt` file to include raw connection strings in that format.  Samples are provided.
 
@@ -24,7 +24,7 @@ Parameters
   -file string
         file with list of servers (default "servers.txt")
   -log string
-        see github.com/denisenkom/go-mssqldb
+        see github.com/microsoft/go-mssqldb
 ```
 
 Setting `-app ""` will omit the application name.

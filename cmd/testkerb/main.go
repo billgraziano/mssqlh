@@ -9,16 +9,16 @@ import (
 	"os"
 	"strings"
 
-	mssql "github.com/denisenkom/go-mssqldb"
 	"github.com/fatih/color"
 	"github.com/jmoiron/sqlx"
+	mssql "github.com/microsoft/go-mssqldb"
 	"github.com/pkg/errors"
 )
 
 func main() {
 	var err error
 	var file = flag.String("file", "servers.txt", "file with list of servers")
-	var driverLog = flag.String("log", "", "see github.com/denisenkom/go-mssqldb")
+	var driverLog = flag.String("log", "", "see github.com/microsoft/go-mssqldb")
 	var appName = flag.String("app", "testkerb", "sets the application name")
 	var debug = flag.Bool("debug", false, "enables debug messages")
 	flag.Parse()

@@ -17,7 +17,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	_ "github.com/alexbrainman/odbc"
-	_ "github.com/denisenkom/go-mssqldb"
+	_ "github.com/microsoft/go-mssqldb"
 )
 
 func TestMSSQL(t *testing.T) {

@@ -1,8 +1,14 @@
 # SQL Server Helper Library
+
+## Version 2
+Starting in version 2.0, `github.com/microsoft/go-mssqldb` replaces `github.com/denisenkom/go-mssqldb`.  
+
+## Documentation
+
 Package `mssqlh` provides connection string building and helper routines for working with Microsoft SQL Server.
 
 This package provides support for connecting to SQL Server using either:
-* https://github.com/denisenkom/go-mssqldb (native GO driver) 
+* https://github.com/microsoft/go-mssqldb (native GO driver) 
 * https://github.com/alexbrainman/odbc (ODBC driver)
 
 Using the Connection type, you should be able to switch seamlessly between the two.
@@ -17,7 +23,7 @@ db, err := mssqlh.Open(fqdn)
 This uses a trusted connection to the designated server using the `mssql` driver.  It accepts
 server.domain.com, server\instance, server,port, or server:port.
 
-Example code using NewConnection:
+Example code using `NewConnection`:
 ```go
 cxn := mssqlh.NewConnection("localhost", "", "", "myapp")
 db, err := sql.Open("mssql", cxn.String())
@@ -78,4 +84,4 @@ Linux looks for the following files to locate installed ODBC drivers:
 The system comes with three sample applications 
 * `mssqlh.exe` is a sample application
 * `odbcraw.exe` can test ODBC connections from a `settings.txt` file
-* `testkerbexe` can test connections for Kerberos from a `settings.txt` file
+* `testkerb.exe` can test connections for Kerberos from a `settings.txt` file
