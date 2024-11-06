@@ -2,9 +2,9 @@
 # One per line
 # See https://github.com/alexbrainman/odbc
 
-Driver={ODBC Driver 17 for SQL Server}; Server=localhost; Trusted_Connection=Yes;
+# Driver={ODBC Driver 17 for SQL Server}; Server=localhost; Trusted_Connection=Yes;
 # Driver={SQL Server Native Client 11.0}; Server=D40\SQL2016; Trusted_Connection=Yes;
 # Driver={ODBC Driver 11 for SQL Server}; Server=D40\SQL2016; Trusted_Connection=Yes;
 # Driver={ODBC Driver 13 for SQL Server}; Server=D40\SQL2016; Trusted_Connection=Yes;
-# Driver={ODBC Driver 17 for SQL Server}; Server=D40\SQL2016; Trusted_Connection=Yes;
+Driver={ODBC Driver 17 for SQL Server}; Server=D40\SQL2016; Trusted_Connection=Yes;
 # Driver={ODBC Driver 17 for SQL Server}; Server=127.0.0.1,60361; Trusted_Connection=Yes;
