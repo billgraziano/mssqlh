@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/billgraziano/mssqlh/odbch"
+	"github.com/billgraziano/mssqlh/v2/odbch"
 )
 
 // odbcString returns a connection string for a GO ODBC connection

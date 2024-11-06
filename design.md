@@ -1,5 +1,5 @@
 
-* Happy path is "mssql" driver - Can override with SetDriver()
+* Happy path is the GO driver - Can override with SetDriver()
 * Server object GetServer(sql.DB - but my interface) returns Server
 * Session object GetSession(sql.DB - but my interface) returns Session
 * Interface with just the stuff I need (like sqlx does)

@@ -1,7 +1,9 @@
 # SQL Server Helper Library
 
 ## Version 2
-Starting in version 2.0, `github.com/microsoft/go-mssqldb` replaces `github.com/denisenkom/go-mssqldb`.  
+Starting in version 2.0
+* `github.com/microsoft/go-mssqldb` replaces `github.com/denisenkom/go-mssqldb`
+* The driver name changes from "mssql" to "sqlserver".  This means that parameters should be specified as @p1 (for place holders) or @NamedParameter (for named parameters).
 
 ## Documentation
 
@@ -12,7 +14,7 @@ This package provides support for connecting to SQL Server using either:
 * https://github.com/alexbrainman/odbc (ODBC driver)
 
 Using the Connection type, you should be able to switch seamlessly between the two.
-The package defaults to the "mssql" driver (`mssqlh.DriverMSSQL`) usless you specify the "odbc" driver (`mssqlh.DriverODBC`).
+The package defaults to the "sqlserver" driver (`mssqlh.DriverMSSQL`) usless you specify the "odbc" driver (`mssqlh.DriverODBC`).
 
 Example using Open:
 ```go
@@ -26,7 +28,7 @@ server.domain.com, server\instance, server,port, or server:port.
 Example code using `NewConnection`:
 ```go
 cxn := mssqlh.NewConnection("localhost", "", "", "myapp")
-db, err := sql.Open("mssql", cxn.String())
+db, err := sql.Open("sqlserver", cxn.String())
 ```
 
 If you don't pass user and password, it defaults to a trusted connection.
@@ -79,6 +81,10 @@ It should support Linux but this has recived very little testing.
 Linux looks for the following files to locate installed ODBC drivers:
 * /usr/local/etc/odbcinst.ini
 * /etc/odbcinst.ini
+
+## Testing
+* Set the environment variable `MSSQLH_SERVERS` to a comma-separated list of servers
+* `go test .\... -v -p 1`
 
 ## Applications
 The system comes with three sample applications 

@@ -6,14 +6,14 @@ import (
 	"log"
 
 	_ "github.com/alexbrainman/odbc"
-	"github.com/billgraziano/mssqlh"
+	"github.com/billgraziano/mssqlh/v2"
 	_ "github.com/microsoft/go-mssqldb"
 	"github.com/pkg/errors"
 )
 
 func main() {
 	// driver & odbc driver
-	var driver = flag.String("driver", "mssql", "mssql | odbc")
+	var driver = flag.String("driver", "sqlserver", "sqlserver | odbc")
 	var odbc = flag.String("odbc", "ODBC Driver 17 for SQL Server", "ODBC driver if using ODBC")
 	var srv = flag.String("s", "", "server (server.net.com or server,port or server:port)")
 	var user = flag.String("u", "", "user name")

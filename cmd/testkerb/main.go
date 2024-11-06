@@ -77,7 +77,7 @@ func main() {
 			}
 		}
 
-		db, err := sqlx.Open("mssql", s)
+		db, err := sqlx.Open("sqlserver", s)
 		if err != nil {
 			msg := sqlerror(err)
 			fmt.Fprintf(color.Output, " ==> %s\n", red(msg))

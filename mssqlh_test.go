@@ -10,9 +10,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/billgraziano/mssqlh/odbch"
+	"github.com/billgraziano/mssqlh/v2/odbch"
 
-	"github.com/billgraziano/mssqlh"
+	"github.com/billgraziano/mssqlh/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -34,7 +34,7 @@ func TestMSSQL(t *testing.T) {
 		fmt.Printf("server: %s\r\n", server)
 		server = strings.TrimSpace(server)
 
-		// Test with "mssql" driver
+		// Test with GO driver
 		m, err := mssqlh.Open(server, "")
 		require.NoError(err, "mssql open failed: %s", server)
 

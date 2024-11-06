@@ -1,4 +1,4 @@
-module github.com/billgraziano/mssqlh
+module github.com/billgraziano/mssqlh/v2
 
 go 1.19
 

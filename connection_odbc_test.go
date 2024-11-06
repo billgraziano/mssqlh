@@ -3,7 +3,7 @@ package mssqlh
 import (
 	"testing"
 
-	"github.com/billgraziano/mssqlh/odbch"
+	"github.com/billgraziano/mssqlh/v2/odbch"
 	"github.com/stretchr/testify/assert"
 )
 
