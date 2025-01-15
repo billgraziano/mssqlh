@@ -32,6 +32,7 @@ func TestMSSQLString(t *testing.T) {
 		{"encrypt-strict", Connection{Encrypt: EncryptStrict}, "sqlserver://localhost?encrypt=true"},
 		{"encrypt-mandatory", Connection{Encrypt: EncryptMandatory}, "sqlserver://localhost?encrypt=true"},
 		{"encrypt-other", Connection{Encrypt: "other"}, "sqlserver://localhost?encrypt=other"},
+		{"encrypt-other", Connection{Encrypt: "optional"}, "sqlserver://localhost?encrypt=optional"},
 		{
 			"big",
 			Connection{
