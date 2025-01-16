@@ -16,7 +16,9 @@ func TestMSSQLString(t *testing.T) {
 	}{
 		{"empty", Connection{}, "sqlserver://localhost"},
 		{"host", Connection{FQDN: "test"}, "sqlserver://test"},
+		{"np:host", Connection{FQDN: "np:test"}, "sqlserver://test?protocol=np"},
 		{"fqdn", Connection{FQDN: "test.example.com"}, "sqlserver://test.example.com"},
+		{"tcp:fqdn", Connection{FQDN: "tcp:test.example.com"}, "sqlserver://test.example.com?protocol=tcp"},
 		{"host-instance", Connection{FQDN: "test\\junk"}, "sqlserver://test/junk"},
 		{"host-comma-port", Connection{FQDN: "test,1433"}, "sqlserver://test:1433"},
 		{"host-colon-port", Connection{FQDN: "test:1433"}, "sqlserver://test:1433"},

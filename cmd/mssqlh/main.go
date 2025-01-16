@@ -8,6 +8,8 @@ import (
 	_ "github.com/alexbrainman/odbc"
 	"github.com/billgraziano/mssqlh/v2"
 	_ "github.com/microsoft/go-mssqldb"
+	_ "github.com/microsoft/go-mssqldb/namedpipe"
+	_ "github.com/microsoft/go-mssqldb/sharedmemory"
 	"github.com/pkg/errors"
 )
 
@@ -59,11 +61,12 @@ func main() {
 		log.Fatal(errors.Wrap(err, "mssqlh.getserver"))
 	}
 
-	//session := mssqlh.Session{}
-	session, err := mssqlh.GetSession(context.Background(), db)
+	s, err := mssqlh.GetSession(context.Background(), db)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "mssqlh.getsession"))
 	}
-	log.Printf("Connected to %s (%s) as '%s' on session %d via '%s' in [%s] using '%s'\r\n",
-		server.Name, server.Domain, session.Login, session.ID, session.AuthScheme, session.Database, session.Application)
+	log.Printf("Connected to %s (%s) as '%s' [%s/%s/%s/%d] in '%s' from '%s'\n",
+		server.Name, server.Domain, s.Login,
+		s.Transport, s.ClientInterface, s.AuthScheme, s.ID,
+		s.Database, s.Application)
 }

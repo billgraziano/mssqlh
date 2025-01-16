@@ -33,6 +33,9 @@ func (c Connection) mssqlString() string {
 	if c.ConnectTimeout > 0 {
 		query.Add("connect timeout", strconv.Itoa(c.ConnectTimeout))
 	}
+	if c.Protocol != "" {
+		query.Add("protocol", c.Protocol)
+	}
 
 	if c.Encrypt != "" {
 		switch c.Encrypt {

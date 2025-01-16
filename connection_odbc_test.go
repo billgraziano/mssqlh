@@ -17,7 +17,9 @@ func TestODBCString(t *testing.T) {
 	}{
 		{"empty", Connection{}, "Driver={SQL Server Native Client 11.0}; Server=localhost; Trusted_Connection=Yes;"},
 		{"host", Connection{FQDN: "test"}, "Driver={SQL Server Native Client 11.0}; Server=test; Trusted_Connection=Yes;"},
+		{"mp:host", Connection{FQDN: "np:test"}, "Driver={SQL Server Native Client 11.0}; Server=np:test; Trusted_Connection=Yes;"},
 		{"fqdn", Connection{FQDN: "test.example.com"}, "Driver={SQL Server Native Client 11.0}; Server=test.example.com; Trusted_Connection=Yes;"},
+		{"tcp:fqdn", Connection{FQDN: "tcp:test.example.com"}, "Driver={SQL Server Native Client 11.0}; Server=tcp:test.example.com; Trusted_Connection=Yes;"},
 		{"host-instance", Connection{FQDN: "test\\junk"}, "Driver={SQL Server Native Client 11.0}; Server=test\\junk; Trusted_Connection=Yes;"},
 		{"host-port", Connection{FQDN: "test,1433"}, "Driver={SQL Server Native Client 11.0}; Server=test,1433; Trusted_Connection=Yes;"},
 		{"host-colon-port", Connection{FQDN: "test:1433"}, "Driver={SQL Server Native Client 11.0}; Server=test,1433; Trusted_Connection=Yes;"},

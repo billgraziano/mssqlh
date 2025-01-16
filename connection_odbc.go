@@ -23,7 +23,11 @@ func (c Connection) odbcString() string {
 	}
 	str += fmt.Sprintf("Driver={%s}; ", c.ODBCDriver)
 
-	str += fmt.Sprintf("Server=%s; ", c.getODBCServerName())
+	if c.Protocol != "" {
+		str += fmt.Sprintf("Server=%s:%s; ", c.Protocol, c.getODBCServerName())
+	} else {
+		str += fmt.Sprintf("Server=%s; ", c.getODBCServerName())
+	}
 
 	if c.User == "" {
 		str += "Trusted_Connection=Yes; "

@@ -1,5 +1,14 @@
 # SQL Server Helper Library
 
+## Latest 
+* Support protocol prefix such as `tcp:server.domain.com`.  Supported protocols are `tcp`, `np` (named pipes), and `lpc` (shared memory).  The GO MSSQL driver defaults to TCP/IP.
+* If you want named pipes or shared memory, you must import packages to support them.  You should do this everywhere you import the GO MSSQL driver.
+
+	```go
+	_ "github.com/microsoft/go-mssqldb/namedpipe"
+	_ "github.com/microsoft/go-mssqldb/sharedmemory"
+	```
+
 ## Version 2
 Starting in version 2.0
 * `github.com/microsoft/go-mssqldb` replaces `github.com/denisenkom/go-mssqldb`
@@ -23,7 +32,7 @@ db, err := mssqlh.Open(fqdn)
 
 
 This uses a trusted connection to the designated server using the `mssql` driver.  It accepts
-server.domain.com, server\instance, server,port, or server:port.
+server.domain.com, server\instance, server,port, or server:port.  It also accepts an optional protocol prefix.
 
 Example code using `NewConnection`:
 ```go
@@ -70,7 +79,7 @@ This connects using the specified ODBC driver.
 ## SQL Server Version Support
 
 `GetServer` and `GetSession` should support SQL Server 2005 and beyond.  They
-have been tested on SQL Server 2014 through SQL Server 2019.
+have been tested on SQL Server 2014 through SQL Server 2022.
 
 There is limited testing with Azure SQL Databases.  The `GetSession` method
 requires VIEW DATABASE STATE permission.
