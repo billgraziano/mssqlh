@@ -122,6 +122,19 @@ func (c Connection) Port() int {
 	return port
 }
 
+// StripProtocol accepts a server name or FQDN and the format [protocol:]FQDN and returns protocol and FQDN.
+// It supports "np", "lpc" (shared memory), and "tcp".
+// This function is case-sensitive.
+func StripProtocol(server string) (string, string) {
+	prefixes := []string{"tcp:", "np:", "lpc:"}
+	for _, prefix := range prefixes {
+		if strings.HasPrefix(server, prefix) {
+			return strings.TrimSuffix(prefix, ":"), strings.TrimPrefix(server, prefix)
+		}
+	}
+	return "", server
+}
+
 // setDefaults sets defaults for the driver and host name.
 // This allows and empty connection to be used
 func (c *Connection) setDefaults() {
@@ -131,7 +144,7 @@ func (c *Connection) setDefaults() {
 	if c.FQDN == "" {
 		c.FQDN = "localhost"
 	}
-	protocol, server := stripProtocol(c.FQDN)
+	protocol, server := StripProtocol(c.FQDN)
 	if protocol != "" {
 		c.Protocol = protocol
 		c.FQDN = server
@@ -150,7 +163,7 @@ func exeName() (string, error) {
 // parse FQDN splits a host\instance with optional port and protocol
 func parseFQDN(s string) (protocol, host, instance string, port int) {
 	var err error
-	protocol, s = stripProtocol(s)
+	protocol, s = StripProtocol(s)
 	parts := strings.FieldsFunc(s, hostSplitter)
 	host = parts[0]
 	if len(parts) == 1 {
@@ -176,17 +189,4 @@ func parseFQDN(s string) (protocol, host, instance string, port int) {
 // hostSplitter splits a string on :,\ and is used to split FQDN names
 func hostSplitter(r rune) bool {
 	return r == ':' || r == ',' || r == '\\'
-}
-
-// stripProtocol accepts a server name or FQDN and the format [protocol:]FQDN and returns protocol and FQDN.
-// It supports "np", "lpc" (shared memory), and "tcp".
-// This function is case-sensitive.
-func stripProtocol(server string) (string, string) {
-	prefixes := []string{"tcp:", "np:", "lpc:"}
-	for _, prefix := range prefixes {
-		if strings.HasPrefix(server, prefix) {
-			return strings.TrimSuffix(prefix, ":"), strings.TrimPrefix(server, prefix)
-		}
-	}
-	return "", server
 }

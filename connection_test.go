@@ -95,7 +95,7 @@ func TestStripProtocol(t *testing.T) {
 		{"other:host", "", "other:host"},
 	}
 	for _, tc := range tests {
-		protocol, server := stripProtocol(tc.got)
+		protocol, server := StripProtocol(tc.got)
 		assert.Equal(tc.protocol, protocol)
 		assert.Equal(tc.server, server)
 	}
